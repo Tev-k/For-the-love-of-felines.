@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purrrfect Cats</title>
+    <style>
+        /* Base page styling*/
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: #1c1a27; /*soft deep dusk background*/
+            color: #f3e8ee;           /*Warm off-white for high contrast text*/
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;        /*Keeps scrolling smooth when elements fall*/
+            min-height: 100vh;
+        }
+
+        .beans-gallery{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            padding: 30px 20px;
+        }
+
+        .triangle-row-top {
+            display: flex;
+            justify-content: center;
+        }
+
+        .triangle-row-bottom {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            flex-wrap: wrap;
+        }
+
+        .bean-card {
+            background-color: #282436;
+            padding: 15px 15px 20px 15px;
+            border-radius: 16px;
+            border: 1px solid #3d3752;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+            max-width: 240px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        }
+
+        .photo-frame {
+            width: 100%;
+            height: 240px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #1c1a27;
+        }
+
+        /* Photo & Video Styling Inside Frames */
+        .photo-frame img, .photo-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Crops nicely without squishing */
+            display: block;
+            transition: transform 0.4s ease;
+            margin: 0 auto;
+        }
+
+        /* Captions */
+        .bean-caption {
+            margin: 15px 0 0 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #f7c5d9;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        /* Aesthetic Slight Tilts */
+        .tilt-left {
+            transform: rotate(-3deg);
+        }
+
+        .tilt-right {
+            transform: rotate(3deg);
+        }
+
+        /* Interactive Hover Effects */
+        .bean-card:hover {
+            transform: rotate(0deg) translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(216, 131, 168, 0.25);
+            border-color: #d883a8;
+        }
+
+        .bean-card:hover .photo-frame img,
+        .bean-card:hover .photo-frame video {
+            transform: scale(1.06); /* Subtle zoom inside frame when hovered */
+        }
+
+        /*Soft Marquee Styling*/
+        .marquee-banner{
+            background-color: #d883a8; /*Muted aesthetic pink*/
+            color: #ffffff;
+            font-size:1.5rem;
+            font-weight:600;
+            padding: 12px 0;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /*Centered Hero Content*/
+        .cozy-container{
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cozy-container h1{
+            font-size: 2.8rem;
+            color: #f7c5d9; /*Light pastel accent color */
+            margin-bottom: 15px;
+        }
+
+        .cozy-container p{
+            font-size: 1.2rem;
+            line-height:1.6;
+            color:#cbb9d0;
+        }
+
+        /*Class for the falling dynamic elements */
+        .falling-cat{
+            position: fixed;
+            top: -60px;
+            user-select: none;
+            pointer-events: none;/*Allows user to click buttons/text through falling items*/
+            animation:floatDown linear forwards;
+            z-index: 999;
+        }
+
+        /*Keyframes defining how the cats fall and rotate */
+        @keyframes floatDown{
+            0%{
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100%{
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0.1;
+            }
+        }
+        .cat-nav{
+            display: flex;
+            justify-content: center;
+            gap:25px;
+            padding: 15px 0;
+            background-color: #252233;
+            border-bottom: 1px solid #38334a;
+        }
+
+        .cat-nav a{
+            color: #f7c5d9;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .cat-nav a:hover{
+            color:#ffffff;
+            transform: translateY(-2px);/*Soft hover lift effect*/
+        }
+
+        /*Hide all tab content sections by default*/
+        .tab-content{
+            display: none;
+        }
+
+        /*Only display the section with the .active class*/
+        .tab-content.active{
+            display:block;
+        }
+    </style>
+</head>
+<body>
+    <div class="marquee-banner">
+        <nav class="cat-nav">
+            <a href="#Home">The Cat Tree</a>
+            <a href="#Overlords">The Overlords</a>
+            <a href="#Gallery">Hall of Beans</a>
+            <a href="#Meow">Send a Meow / Psst-Psst-Psst</a>
+        </nav>
+        <marquee behavior="scroll" direction="left" scrollamount="8">
+            🐈 purrrfect 🐾 purrrfect 🐈 purrrfect ✨
+        </marquee>
+    </div>
+
+    <main class="cozy-container">
+        <!--Home Section-->
+        <section id="Home" class="tab-content active">
+            <h1>For the Love of Felines (´▽`ʃ♡ƪ) 😹</h1>
+            <p>A quiet, cozy corner to admire and obsess over our furry overlords</p>
+            
+            <!-- Styled Cat Tree Photo Frame -->
+            <div style="display: flex; justify-content: center; margin-top: 25px;">
+                <div class="bean-card tilt-right">
+                    <div class="photo-frame">
+                        <img src="Taz and Nito, Yin and yang.jpg" alt="So Yin and Yang coded 😛">
+                    </div>
+                    <p class="bean-caption">☯️ Yin and Yang Coded</p>
+                </div>
+            </div>
+        </section>
+
+        <!--The Overlords Section-->
+        <section id="Overlords" class="tab-content">
+            <h1>Meet the Overlords 👑</h1>
+            <p>Every cat has a story, a royal personality, and a favorite sleeping spot</p>
+
+            <div style="display: flex; justify-content: center; margin-top: 25px;">
+                <div class="bean-card tilt-left">
+                    <div class="photo-frame">
+                        <video id="overlord-video" controls muted loop>
+                            <source src="Taz and Nito edit.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <p class="bean-caption">👑 Tazionna and Nito</p>
+                </div>
+            </div>
+        </section>
+
+        <!--Hall of Beans Section (Triangle Layout)-->
+        <section id="Gallery" class="tab-content">
+            <h1>Hall of Beans 🐾</h1>
+            <p>A curated collection of toe beans, whiskers, and majestic cat moments.</p>
+            
+            <div class="beans-gallery">
+                <!-- Top Apex of Triangle -->
+                <div class="triangle-row-top">
+                    <div class="bean-card tilt-left">
+                        <div class="photo-frame">
+                            <img src="Funny cat.jpg" alt="Funny cat toe beans">
+                        </div>
+                        <p class="bean-caption">🫠 So cute and funny</p>
+                    </div>
+                </div>
+
+                <!-- Bottom Base of Triangle -->
+                <div class="triangle-row-bottom">
+                    <div class="bean-card tilt-right">
+                        <div class="photo-frame">
+                            <img src="Cute kitten.jpg" alt="Aesthetic cat paw beans">
+                        </div>
+                        <p class="bean-caption">🐾 Kitty pawssss😛</p>
+                    </div>
+
+                    <div class="bean-card tilt-left">
+                        <div class="photo-frame">
+                            <img src="aaw cute kitty.webp" alt="Third set of cat beans">
+                        </div>
+                        <p class="bean-caption">🍊 Orange kitty paws</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--Send a Meow Section-->
+        <section id="Meow" class="tab-content">
+            <h1>Send a Meow</h1>
+            <p>Want to talk cats? Drop a message!</p>
+            <p>meowmeow@feline.net</p>
+        </section>
+
+    </main>
+    <script>
+        // Step 1: Function to create a single falling cat
+        function spawnCat(){
+            const cat = document.createElement('div');
+            cat.classList.add('falling-cat');
+
+            const catFaces = ['🐈', '🐾', '🐈', '😹', '✨'];
+            cat.innerText = catFaces[Math.floor(Math.random() * catFaces.length)];
+
+            cat.style.left = Math.random() * 100 + 'vw';
+
+            const fallSpeed = Math.random() * 3 + 2;
+            cat.style.animationDuration = fallSpeed + 's';
+
+            cat.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+
+            document.body.appendChild(cat);
+
+            setTimeout(()=>{
+                cat.remove();
+            }, fallSpeed * 1000);
+        }
+
+        // Trigger a burst of cats when the page loads
+        window.addEventListener('DOMContentLoaded', ()=>{
+            const numberOfCats = 25;
+            for(let i = 0; i < numberOfCats; i++) {
+                setTimeout(spawnCat, i * 120);
+            }
+        });
+
+        // Function to switch between navigation tabs + Autoplay Overlord Video
+        document.querySelectorAll('.cat-nav a').forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevents default page jump
+
+                // 1. Remove active class from all sections
+                document.querySelectorAll('.tab-content').forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // 2. Get the target section ID from href
+                const targetId = link.getAttribute('href').replace('#', '');
+
+                // 3. Add active class to target section
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+
+                // 4. Handle Video Autoplay / Pause
+                const video = document.getElementById('overlord-video');
+                if (video) {
+                    if (targetId === 'Overlords') {
+                        video.currentTime = 0; // Play from beginning
+                        video.play();
+                    } else {
+                        video.pause(); // Pause when leaving the tab
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
